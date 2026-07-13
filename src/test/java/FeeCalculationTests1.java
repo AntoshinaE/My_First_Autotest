@@ -10,10 +10,12 @@ public class FeeCalculationTests1 {
         sleep(3_000);
         $(By.name("sum")).sendKeys("100");
         $(By.name("submit")).click();
+        $(By.name("sum")).clear();
         $(By.name("sum")).setValue("200");
         $(By.name("submit")).click();
         $(By.name("sum")).type("300");
         $(By.name("submit")).click();
+
              sleep(3_000);
     }
 }
