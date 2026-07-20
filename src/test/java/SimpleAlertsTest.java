@@ -6,7 +6,7 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
-public class AlertsTest {
+public class SimpleAlertsTest {
 
     @BeforeAll
     static void setUp() {
