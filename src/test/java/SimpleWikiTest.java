@@ -5,13 +5,13 @@ import static com.codeborne.selenide.Selenide.open;
 public class SimpleWikiTest {
     @Test
     void test01() {
-        open("https://ru.wikipedia.org/wiki/Selenium");
-        $("body").shouldHave(text("WebDriver"));
+        open("https://slqa.ru/AT/articles/how-to-install-git.html ");
+        $("body").shouldHave(text("Git"));
     }
     @Test
     void test02() {
-        open("https://ru.wikipedia.org/wiki/Selenium");
-        $("body").shouldHave(text("Selenide"));
+        open("https://slqa.ru/AT/articles/how-to-install-git.html ");
+        $("body").shouldHave(text("Mercurial"));
     }
 }
 

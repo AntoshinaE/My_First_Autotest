@@ -10,6 +10,8 @@ public class FouthLoginTests {
         @BeforeAll
     static void before_all(TestInfo test_info) {
             Configuration.browser = "chrome";
+            Configuration.pageLoadTimeout = 60_000;
+            Configuration.timeout = 10_000;
     }
     @AfterAll
     static void after_all(){
