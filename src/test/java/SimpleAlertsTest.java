@@ -2,7 +2,7 @@ import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Alert;
-import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
@@ -52,9 +52,7 @@ public class SimpleAlertsTest {
             open("https://demoqa.com/alerts");
             getWebDriver().manage().window().maximize();
             $("#promtButton").click();
-            Alert promptAlert = switchTo().alert();
-            promptAlert.sendKeys("Елена");
-            promptAlert.accept();
+             switchTo().alert().sendKeys("Елена");
             $("#promptResult").shouldHave(text("You entered Елена"));
     }
     @Test
