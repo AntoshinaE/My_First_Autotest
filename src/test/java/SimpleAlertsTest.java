@@ -60,8 +60,7 @@ public class SimpleAlertsTest {
         open("https://demoqa.com/alerts");
         getWebDriver().manage().window().maximize();
         $("#promtButton").click();
-        Alert promptAlert = switchTo().alert();
-        promptAlert.sendKeys("Елена");
-        promptAlert.dismiss();
+        switchTo().alert().sendKeys("Елена");
+        switchTo().alert().dismiss();
     }
 }
