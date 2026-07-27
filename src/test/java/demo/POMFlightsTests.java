@@ -1,5 +1,3 @@
-package Test;
-
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.*;
@@ -9,6 +7,7 @@ import org.junit.jupiter.params.provider.CsvFileSource;
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.Selenide.sleep;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+
 @TestMethodOrder(MethodOrderer.DisplayName.class)
 public class POMFlightsTests {
     @BeforeAll
