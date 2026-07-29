@@ -1,13 +1,15 @@
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.*;
+package demo;
+
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.Alert;
 
+import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selenide.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class RegistrationPage {
+
     SelenideElement
             flightInfo = $("#flightRegistrationInfo"),
             buttonFinishRegistration = $x("//button[contains(.,'Завершить регистрацию')]"),
@@ -17,11 +19,10 @@ public class RegistrationPage {
             phone = $("#phone"),
             message = $("#registrationMessage");
 
-
     @Step("Успешная регистрация")
     public void successRegistration() {
         buttonFinishRegistration.click();
-        Alert alert= switchTo().alert();
+        Alert alert = switchTo().alert();
         assertTrue(alert.getText().contains("Бронирование завершено"));
         alert.accept();
         this.message.shouldHave(text("Регистрация успешно завершена!"));
@@ -48,4 +49,13 @@ public class RegistrationPage {
         this.message.shouldHave(text("Пожалуйста, заполните все поля."));
     }
 
+    @Step("Проверить автозаполнение данных пользователя")
+    public RegistrationPage verifyUserData(String expectedName, String expectedPassport,
+                                           String expectedEmail, String expectedPhone) {
+        fio.shouldHave(value(expectedName));
+        passport.shouldHave(value(expectedPassport));
+        email.shouldHave(value(expectedEmail));
+        phone.shouldHave(value(expectedPhone));
+        return this;
+    }
 }

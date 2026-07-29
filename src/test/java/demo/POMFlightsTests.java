@@ -1,3 +1,5 @@
+package demo;
+
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.*;
@@ -8,7 +10,8 @@ import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.Selenide.sleep;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
-@TestMethodOrder(MethodOrderer.DisplayName.class)
+//@TestMethodOrder(MethodOrderer.DisplayName.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class POMFlightsTests {
     @BeforeAll
     static void beforeAll() {
@@ -67,7 +70,7 @@ public class POMFlightsTests {
 
         // Страница поиска рейсов
         SearchPage searchPage = new SearchPage();
-        searchPage.search("16.03.2026", "Москва", "Нью-Йорк");
+        searchPage.search("03.08.2026", "Москва", "Нью-Йорк");
 
         // Страница со списком найденных рейсов
         FlightsListPage flightsList = new FlightsListPage();
@@ -171,6 +174,44 @@ public class POMFlightsTests {
         FlightsListPage flightsList = new FlightsListPage();
         flightsList.sortByPrice();
         flightsList.isTimeSorted();
+    }
+    @Test
+    @Order(1)
+    @DisplayName("10. Вход заблокированного пользователя")
+           void test10LockedUser(){
+        LoginPage loginPage = new LoginPage();
+        loginPage.login("locked_out_user", "lock_pass2");
+        loginPage.IsloginBlocked();
+
+    }
+    @Test
+    @Order(2)
+    @DisplayName("11. Выход из системы")
+    void test11(){
+        LoginPage loginPage = new LoginPage();
+        loginPage.login("standard_user", "stand_pass1");
+        loginPage.isLoginSuccessful("Иванов Иван Иванович");
+        loginPage.logout();
+        loginPage.verifyLoginFormVisible();
+        }
+    @Test
+    @Order(3)
+    @DisplayName("12. Автозаполнение данных пользователя")
+    void test12AutoFill() {
+        LoginPage loginPage = new LoginPage();
+        loginPage.login("standard_user", "stand_pass1");
+        loginPage.isLoginSuccessful("Иванов Иван Иванович");
+        SearchPage searchPage = new SearchPage();
+        searchPage.search("26.07.2026", "Москва", "Лондон");
+        FlightsListPage flightsList = new FlightsListPage();
+        flightsList.registerToFirstFlight();
+                RegistrationPage registrationPage = new RegistrationPage();
+        registrationPage.verifyUserData(
+                "Иванов Иван Иванович",
+                "1234 567890",
+                "ivanov@example.com",
+                "+7 (123) 456-7890"
+        );
     }
 }
 

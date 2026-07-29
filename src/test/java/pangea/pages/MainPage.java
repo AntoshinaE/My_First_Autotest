@@ -7,6 +7,7 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+import static com.codeborne.selenide.WebDriverRunner.url;
 
 public class MainPage {
 
@@ -60,7 +61,7 @@ public class MainPage {
 
     @Step("Открыть меню")
     public MainPage openMenu() {
-        menuTitle.shouldBe(visible);
+        menuTitle.shouldBe(visible).click();
         return this;
     }
 
@@ -68,6 +69,8 @@ public class MainPage {
     public MainPage openLink(String url) {
         Selenide.open(url);
         return this;
+
+
     }
 
     @Step("Вернуться назад")
@@ -88,7 +91,7 @@ public class MainPage {
         return this;
     }
     @Step("Проверить наличие кнопки 'Принять'")
-    public MainPage CheckCookie() {
+    public MainPage checkCookie() {
         cookiecons.shouldBe(visible).click();
         return this;
     }

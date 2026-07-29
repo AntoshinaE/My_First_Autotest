@@ -1,34 +1,69 @@
+package demo;
+
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 
 public class LoginPage {
+    SelenideElement username; // = $("#username");
+    SelenideElement password = $("#password");
 
-    SelenideElement usernameInput = $("#username");
-    SelenideElement passwordInput = $("#password");
-    SelenideElement loginButton = $("#loginButton");
-    SelenideElement message = $("#message");
-    SelenideElement greeting = $("#greeting");
-
-    public LoginPage login(String username, String password) {
-        usernameInput.setValue(username);
-        passwordInput.setValue(password);
-        loginButton.click();
-        return this;
-    }
-    // Метод: проверка успешного логина
-    public LoginPage isLoginSuccessful(String fullName) {
-        message.shouldHave(text("Вход в систему выполнен успешно! Загрузка..."));
-        message.shouldBe(visible);
-        return this;
+    SelenideElement
+            loginButton = $("#loginButton"),
+            errorMessage = $("#message"),
+            greeting = $("#greeting");
+            SelenideElement logoutButton = $("#logoutButton");
+    public LoginPage() {
+        // Конструктор писать не обязательно
+        // Так используют, когда, например, надо из базы данных взять
+        // информацию о локаторе
+        this.username = $("#username");
     }
 
-    // Метод: проверка неуспешного логина
-    public LoginPage isLoginUnsuccessful() {
-        message.shouldHave(text("Неверное имя пользователя или пароль."));
-        message.shouldBe(visible);
+    public static void islogiblocked() {
+    }
+
+    @Step("Вход в систему")
+    public void login(String username, String password) {
+        // $("#username").setValue("standard_user");
+        this.username.setValue(username);
+        this.password.setValue(password);
+        this.loginButton.click();
+    }
+
+    @Step("Неуспешный логин")
+    public void isLoginUnsuccessful() {
+        this.errorMessage.shouldBe(visible);
+        this.errorMessage.shouldHave(Condition.cssClass("error"));
+        this.errorMessage.shouldHave(text("Неверное имя пользователя или пароль."));
+    }
+
+    @Step("Успешный логин")
+    public void isLoginSuccessful(String fio) {
+
+        this.greeting.shouldHave(text("Добро пожаловать, " + fio + "!"));
+    }
+
+@Step("вход заблокированного пользователя")
+    public void IsloginBlocked() {
+    this.errorMessage.shouldBe(visible);
+    this.errorMessage.shouldHave(Condition.cssClass("error"));
+    this.errorMessage.shouldHave(text("Пользователь заблокирован."));
+    }
+    @Step("Выйти из системы")
+    public LoginPage logout() {
+        logoutButton.click();
         return this;
     }
-}
+    public LoginPage verifyLoginFormVisible() {
+        username.shouldBe(visible);
+        password.shouldBe(visible);
+        loginButton.shouldBe(visible);
+        return this;
+    }
+    }
+

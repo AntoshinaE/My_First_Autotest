@@ -87,7 +87,7 @@ public class PangeaTests {
     @DisplayName("06. Проверка наличия кнопки принять")
     void test06CheckCookie(){
         mainPage.open()
-                .CheckCookie()
+                .checkCookie()
                 .shouldBeVisible();
 
         }
